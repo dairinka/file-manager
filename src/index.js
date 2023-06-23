@@ -1,11 +1,16 @@
-import { UserName } from './userName.js';
-import { exitFromFM } from './exit.js';
-//import { fs } from 'fs/promise';
+import os, { homedir } from 'os';
 
-// const welcomeMessage = async () => {
-//   const userName = fs.
-// }
-const welcomeMessage = `Welcome to the File Manager, ${UserName()}!`;
-console.log(welcomeMessage);
+import { USERNAME } from './userName.js';
+import { ListenProcess } from './listenProcess.js';
 
-exitFromFM();
+
+
+const welcomeMessage = `Welcome to the File Manager, ${USERNAME}!`;
+console.log(`\x1b[32m${welcomeMessage}\x1b[0m`);
+
+const userHomeDir = os.homedir();
+process.chdir(userHomeDir);
+console.log( 'You are currently in\x1b[32m', process.cwd(), '\x1b[0m');
+
+ListenProcess();
+
