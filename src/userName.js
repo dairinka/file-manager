@@ -2,15 +2,17 @@ const UserName = () => {
   let userName = '';
 
   try {
-    userName = process.argv.slice(2)[0].split('=')[1];
+    const argArr = process.argv.slice(2);
+    const userNameForCheck = argArr.filter((arg) => arg.split('=')[0] === '--username')[0];
+    userName = userNameForCheck ? userNameForCheck.split('=')[1] : 'Stranger';
   } catch {
     userName = 'Stranger';
   }  
   
   return userName;
 }
-
-export { UserName };
+const USERNAME = UserName();
+export { USERNAME };
 
 
 
