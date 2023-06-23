@@ -1,0 +1,20 @@
+{
+  "name": "file-manager",
+  "version": "1.0.0",
+  "description": "file manager with CLI",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dairinka/file-manager.git"
+  },
+  "author": "@dairinka",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dairinka/file-manager/issues"
+  },
+  "homepage": "https://github.com/dairinka/file-manager#readme"
+}
