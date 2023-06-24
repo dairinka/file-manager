@@ -12,13 +12,11 @@ const folderList = async () => {
       files.forEach((fileName, ind, arr) => {
         const currentFilePath = path.join(currentDirPath, fileName);
         
-        fs.stat(currentFilePath, (_, stats) => {
-            const fileType = stats?.isDirectory ? 'directory' : 'file'; 
-            filesStatArr.push({'Name': fileName, 'Type': fileType});
+        const extantion = path.extname( currentFilePath );
+        const fileType = extantion === '' || fileName.match(/^\$*/) ? 'directory': 'file'; 
+        filesStatArr.push({'Name': fileName, 'Type': fileType});
 
-            if(ind === arr.length-1) {console.table(filesStatArr)}
-        }) 
-  
+        if(ind === arr.length-1) {console.table(filesStatArr)}
       })
 
     })

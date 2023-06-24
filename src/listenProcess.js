@@ -1,5 +1,6 @@
 import { USERNAME} from './userName.js';
 import { folderList } from './folderList.js';
+import { checkCommand } from './checkCommand.js';
 
 import * as readline from 'readline';
 import {
@@ -21,13 +22,11 @@ const ListenProcess = async() => {
       case 'up':
         process.chdir('../');
         break;
-      case 'cd':
-        break;
       case 'ls':
         folderList();
         break;  
       default:
-        console.log('Invalid input');
+        checkCommand(inputData);
     }
    
   
