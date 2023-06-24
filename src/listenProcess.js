@@ -1,4 +1,5 @@
 import { USERNAME} from './userName.js';
+import { folderList } from './folderList.js';
 
 import * as readline from 'readline';
 import {
@@ -13,9 +14,22 @@ const ListenProcess = async() => {
  
   rl.on('line', (inputData) => {
     inputData = inputData.trim().toLowerCase();
-    if (inputData === 'exit') {
-      process.exit(0);
-    } 
+    switch(inputData) {
+      case 'exit':
+        process.exit(0);
+        break;
+      case 'up':
+        process.chdir('../');
+        break;
+      case 'cd':
+        break;
+      case 'ls':
+        folderList();
+        break;  
+      default:
+        console.log('Invalid input');
+    }
+   
   
     console.log('You are currently in\x1b[32m', process.cwd(), '\x1b[0m')
   })
