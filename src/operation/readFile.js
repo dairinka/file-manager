@@ -18,7 +18,7 @@ const readFile = (userPath) => {
           const rs = fs.createReadStream(userPath, {encoding: 'UTF-8'});
 
           rs.on('data', (stream) => {
-            process.stdout.write('\x1b[33m' + stream + '\x1b[0m\n', (err) => {
+            process.stdout.write(stream + '\n', (err) => {
                 if(err) console.log('Operation failed');
             })
           })
