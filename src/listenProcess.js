@@ -1,5 +1,5 @@
 import { USERNAME} from './userName.js';
-import { folderList } from './folderList.js';
+import { folderList } from './operation/folderList.js';
 import { checkCommand } from './checkCommand.js';
 
 import * as readline from 'readline';
