@@ -1,6 +1,7 @@
 import path from 'path';
 import { readFile } from './operation/readFile.js';
 import { createFile } from './operation/createFile.js';
+import { renameFile } from './operation/renameFile.js';
 
 const checkCommand = (arg) => {
 
@@ -21,12 +22,22 @@ const checkCommand = (arg) => {
 
   if(arg.match(/^add./)){
     const fileName = arg.split(' ')[1];
-    // try {
-    //   createFile(fileName);
-    // } catch {
-    //   console.log('Operation failed');
-    // }
-    createFile(fileName);
+    try {
+      createFile(fileName);
+    } catch {
+      console.log('Operation failed');
+    }
+  }
+
+  if(arg.match(/^rn./)){
+    const argArr = arg.split(' ');
+    const src = path.resolve(argArr[1]);
+    const dest = path.resolve(argArr[2]);
+    try {
+      renameFile(src, dest);
+    } catch {
+      console.log('Operation failed');
+    }
   }
 }
 export { checkCommand };

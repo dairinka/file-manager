@@ -12,7 +12,7 @@ const createFile = (fileName) => {
     if (err){
       console.log('Operation failed: check your permission or try to use another directory');
     } else {
-      console.log('File was created');
+      console.log('\x1b[32mFile was created\x1b[0m');
     }
     
   } )
