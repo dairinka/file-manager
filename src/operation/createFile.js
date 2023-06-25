@@ -8,7 +8,7 @@ const createFile = (fileName) => {
     return;
   }
   const filePath = path.resolve(fileName);
-  fs.open(filePath, 'a+', (err) => {
+  fs.open(filePath, 'w+', (err) => {
     if (err){
       console.log('Operation failed: check your permission or try to use another directory');
     } else {

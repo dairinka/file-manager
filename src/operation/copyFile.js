@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const copyFile = (src, dest) => {
+const copyFile = (src, dest, cb) => {
   const fileSrcName = path.basename(src);
   const fileDestName = path.basename(dest);
 
@@ -23,6 +23,7 @@ const copyFile = (src, dest) => {
       })
       ws.on('finish', () => {
         console.log('\x1b[32mFile was copied\x1b[0m');
+        if(cb) cb();
       })
     })
   } else {

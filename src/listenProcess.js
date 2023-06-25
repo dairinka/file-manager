@@ -29,7 +29,6 @@ const ListenProcess = async() => {
         checkCommand(inputData);
     }
    
-  
     console.log('You are currently in\x1b[32m', process.cwd(), '\x1b[0m')
   })
 
@@ -47,6 +46,7 @@ const ListenProcess = async() => {
         }
     );
   });
+
     
 }
 
