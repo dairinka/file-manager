@@ -5,9 +5,9 @@ const removeFile = async (userPath) => {
     await access(userPath)
     await unlink(userPath);
     process.stdout.write('\x1b[32m');
-    console.log(`File ${userPath} was removed`);
+    console.log(`File ${userPath} was removed \x1b[0m`);
   } catch (err) {
-    console.error(`Operation failed: ${err.message} \x1b[0m` );
+    console.error(`Operation failed: ${err.message}` );
   }
 
 }

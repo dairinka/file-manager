@@ -7,6 +7,8 @@ import { copyFile } from './operation/copyFile.js';
 import { moveFile } from './operation/moveFile.js';
 import { removeFile } from './operation/removeFile.js';
 import { calculateHash } from './operation/calculateHash.js';
+import { compressFile } from './operation/compressFile.js';
+import { decompressFile } from './operation/decompressFile.js';
 import { checkTwoPathArgument } from './utils/checkTwoPathArgument.js';
 import { correctTwoPath } from './utils/correctTwoPath.js';
 
@@ -94,9 +96,7 @@ const checkCommand = (arg) => {
   if(arg.match(/^rm./)) {
     try {
       const userPath  = arg.split(' ')[1];
-      console.log('userPath', userPath);
       const pathResolve = path.resolve(userPath);
-      console.log('pathResolve', pathResolve);
       removeFile(pathResolve);
     } catch {
       console.log('Operation failed');
@@ -130,10 +130,41 @@ const checkCommand = (arg) => {
     return;
   }
 
-  if(arg.match(/^hash./)){
+  if(arg.match(/^hash./)) {
     try{
-      const argum = arg.split(' ')[1];
-      calculateHash(argum);
+      const userPath = arg.split(' ')[1];
+      const pathResolve = path.resolve(userPath);
+      calculateHash(pathResolve);
+    } catch {
+      console.log('Operation failed');
+    }
+    return;
+  }
+
+  if(arg.match(/^compress./)) {
+    try {
+      const argArr = arg.split(' ');
+      const isPathCorrect = checkTwoPathArgument(argArr);
+
+      if(isPathCorrect) {
+        const [src, dest] = correctTwoPath(argArr);
+        compressFile(src, dest);
+      }
+    } catch {
+      console.log('Operation failed');
+    }
+    return;
+  }
+
+  if(arg.match(/^decompress./)) {
+    try {
+      const argArr = arg.split(' ');
+      const isPathCorrect = checkTwoPathArgument(argArr);
+
+      if(isPathCorrect) {
+        const [src, dest] = correctTwoPath(argArr);
+        decompressFile(src, dest);
+      }
     } catch {
       console.log('Operation failed');
     }
