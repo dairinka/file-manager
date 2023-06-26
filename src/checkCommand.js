@@ -4,11 +4,15 @@ import { readFile } from './operation/readFile.js';
 import { createFile } from './operation/createFile.js';
 import { renameFile } from './operation/renameFile.js';
 import { copyFile } from './operation/copyFile.js';
+import { moveFile } from './operation/moveFile.js';
 import { removeFile } from './operation/removeFile.js';
+import { calculateHash } from './operation/calculateHash.js';
+import { checkTwoPathArgument } from './utils/checkTwoPathArgument.js';
+import { correctTwoPath } from './utils/correctTwoPath.js';
 
 const checkCommand = (arg) => {
 
-  if(arg.match(/^cd./)){
+  if(arg.match(/^cd./)) {
     const userPath  = arg.split(' ')[1];
     try {
       process.chdir(userPath);
@@ -18,7 +22,7 @@ const checkCommand = (arg) => {
     return;   
   }
 
-  if(arg.match(/^cat./)){
+  if(arg.match(/^cat./)) {
     try {
       const userPath  = arg.split(' ')[1];
       const pathResolve = path.resolve(userPath);
@@ -29,7 +33,7 @@ const checkCommand = (arg) => {
     return;    
   }
 
-  if(arg.match(/^add./)){
+  if(arg.match(/^add./)) {
     try {
       const fileName = arg.split(' ')[1];
       createFile(fileName);
@@ -39,67 +43,47 @@ const checkCommand = (arg) => {
     return;  
   }
 
-  if(arg.match(/^rn./)){
+  if(arg.match(/^rn./)) {
     try {
       const argArr = arg.split(' ');
-      if(argArr[1] === argArr[2] ){
-        console.log('Operation failed: try to use different path');
-        return;
+      const isPathCorrect = checkTwoPathArgument(argArr);
+      
+      if(isPathCorrect) {
+        const [src, dest] = correctTwoPath(argArr);
+        renameFile(src, dest);
       }
-      if(((argArr[1] ?? '') === '' )|| ((argArr[2] ?? '') === '')) {
-        console.log('Operation failed: try to use correct path');
-        return;
-      }
-      const src = path.resolve(argArr[1]);
-      const dest = path.resolve(argArr[2]);
-
-      renameFile(src, dest);
-
+      
     } catch {
       console.log('Operation failed');
     }
     return;  
   }
 
-  if(arg.match(/^cp./)){
+  if(arg.match(/^cp./)) {
     try {
       const argArr = arg.split(' ');
-      if(argArr[1] === argArr[2] ){
-        console.log('Operation failed: try to use different path');
-        return;
-      }
-      if(((argArr[1] ?? '') === '' )|| ((argArr[2] ?? '') === '')) {
-        console.log('Operation failed: try to use correct path');
-        return;
-      }
-      const src = path.resolve(argArr[1]);
-      const dest = path.resolve(argArr[2]);
-      console.log('\x1b[33msource\x1b[0m', src);
-      console.log('\x1b[33mdestination\x1b[0m', dest);
+      const isPathCorrect = checkTwoPathArgument(argArr);
 
-      copyFile(src, dest);
+      if(isPathCorrect) {
+        const [src, dest] = correctTwoPath(argArr);
+        copyFile(src, dest);
+      }
     } catch {
       console.log('Operation failed');
     }
     return; 
   }
 
-  if(arg.match(/^mv./)){
+  if(arg.match(/^mv./)) {
     try {
       const argArr = arg.split(' ');
-      if(argArr[1] === argArr[2] ){
-        console.log('Operation failed: try to use different path');
-        return;
+
+      const isPathCorrect = checkTwoPathArgument(argArr);
+
+      if(isPathCorrect) {
+        const [src, dest] = correctTwoPath(argArr);
+        moveFile(src, dest);
       }
-      if(((argArr[1] ?? '') === '' )|| ((argArr[2] ?? '') === '')) {
-        console.log('Operation failed: try to use correct path');
-        return;
-      }
-      const src = path.resolve(argArr[1]);
-      const dest = path.resolve(argArr[2]);
-      console.log('\x1b[33msource\x1b[0m', src);
-      console.log('\x1b[33mdestination\x1b[0m', dest);
-      copyFile(src, dest, removeFile(src));
 
     } catch {
       console.log('Operation failed');
@@ -110,7 +94,10 @@ const checkCommand = (arg) => {
   if(arg.match(/^rm./)) {
     try {
       const userPath  = arg.split(' ')[1];
-      removeFile(userPath);
+      console.log('userPath', userPath);
+      const pathResolve = path.resolve(userPath);
+      console.log('pathResolve', pathResolve);
+      removeFile(pathResolve);
     } catch {
       console.log('Operation failed');
     }
@@ -137,6 +124,16 @@ const checkCommand = (arg) => {
           console.log(os.arch());
           break;
       }
+    } catch {
+      console.log('Operation failed');
+    }
+    return;
+  }
+
+  if(arg.match(/^hash./)){
+    try{
+      const argum = arg.split(' ')[1];
+      calculateHash(argum);
     } catch {
       console.log('Operation failed');
     }
