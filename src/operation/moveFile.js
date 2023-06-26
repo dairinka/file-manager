@@ -1,7 +1,7 @@
 import fs from 'fs';
 import path from 'path';
 
-const copyFile = (src, dest) => {
+const moveFile = (src, dest) => {
   const fileSrcName = path.basename(src);
   const fileDestName = path.basename(dest);
 
@@ -23,7 +23,14 @@ const copyFile = (src, dest) => {
         console.log(`Operation failed(copy file ws.on): ${err.message}`);
       })
       ws.on('finish', () => {
-        console.log(`\x1b[32mFile was copied to ${dest}\x1b[0m`);
+        fs.unlink(src, (error) => {
+          if (error) {
+            console.log(`Operation failed (delete source file): ${error.message}`);
+          } else {
+            console.log(`\x1b[32mFile was moved to ${dest}\x1b[0m`);
+
+          }
+        })
       })
     })
   } else {
@@ -32,4 +39,4 @@ const copyFile = (src, dest) => {
   
 } 
 
-export { copyFile };
+export { moveFile };
