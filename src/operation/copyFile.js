@@ -23,7 +23,8 @@ const copyFile = (src, dest) => {
         console.log(`Operation failed(copy file ws.on): ${err.message}`);
       })
       ws.on('finish', () => {
-        console.log(`\x1b[32mFile was copied to ${dest}\x1b[0m`);
+        process.stdout.write('\x1b[32m');
+        console.log(`File was copied to ${dest}\x1b[0m`);
       })
     })
   } else {

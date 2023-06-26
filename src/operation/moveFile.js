@@ -27,7 +27,8 @@ const moveFile = (src, dest) => {
           if (error) {
             console.log(`Operation failed (delete source file): ${error.message}`);
           } else {
-            console.log(`\x1b[32mFile was moved to ${dest}\x1b[0m`);
+            process.stdout.write('\x1b[32m');
+            console.log(`File was moved to ${dest}\x1b[0m`);
 
           }
         })

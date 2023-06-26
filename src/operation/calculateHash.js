@@ -8,7 +8,8 @@ const calculateHash = (srcFilePath) => {
         return;
       };
       const hash = createHash('sha256').update(data).digest('hex');
-      console.log('\x1b[36m', hash, '\x1b[0m');
+      process.stdout.write('\x1b[36m');
+      console.log(hash, '\x1b[0m');
   })
 }
 
