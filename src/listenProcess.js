@@ -38,12 +38,12 @@ const ListenProcess = async() => {
 
   rl.on('SIGINT', () => {
     rl.question(
-        'Are you sure you want to exit from File Manager? ',
-        (answer) => {
-            if (answer.match(/^y(es)?$/i)) {
-              process.exit(0);
-            }
+      'Are you sure you want to exit from File Manager? ',
+      (answer) => {
+        if (answer.match(/^y(es)?$/i)) {
+          process.exit(0);
         }
+      }
     );
   });
 
